@@ -26,11 +26,6 @@ public class TodoController {
         return "redirect:/";
     }
 
-    // @GetMapping("/")
-    // public String index() {
-    //     return "index";
-    // }
-    
     @GetMapping("/")
     public ModelAndView list() {
         return new ModelAndView("index", Map.of("todos", todoRepository.findAll()));
