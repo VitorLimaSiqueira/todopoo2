@@ -6,6 +6,27 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <form method="post" action="/create">
+        <label>Tarefa</label><input type="text" name="tittle"/><br>
+        <label>prazo</label><input type="text" name="deadline"/><br>
+        <button type="submit">Salvar</button>
+    </form>
+
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th>Titulo</th><th>Criada em</th><th>Prazo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each = "todo : ${todos}">
+                <td th:text = "${todo.title}"></td>
+                <td th:text = "${todo.createAt}"></td>
+                <td th:text = "${todo.deadline}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <h1>67</h1>
 </body>
 </html>
