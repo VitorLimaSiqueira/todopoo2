@@ -6,11 +6,11 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.edu.ifpr.todolistif.model.Todo;
 import br.edu.ifpr.todolistif.repository.TodoRepository;
 import org.springframework.web.servlet.ModelAndView;
-
 
 @Controller
 public class TodoController {
@@ -35,5 +35,23 @@ public class TodoController {
     public List<Todo> listJson() {
         return todoRepository.findAll();
     }
-    
+
+    @PostMapping("/delete")
+public String delete(@RequestParam Long id) {
+    todoRepository.deleteById(id);
+    return "redirect:/";
+}
+
+@PostMapping("/concluir")
+public String concluir(@RequestParam Long id) {
+    Todo todo = todoRepository.findById(id).orElseThrow();
+
+    todo.markAsFinished();
+    todoRepository.save(todo);
+
+    return "redirect:/";
+}
+
+
+
 }

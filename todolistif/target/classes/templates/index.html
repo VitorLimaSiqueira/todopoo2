@@ -1,31 +1,329 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>To Do List</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f4f6f8;
+        color: #333;
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 30px;
+    }
+
+    .form-card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        margin-bottom: 30px;
+    }
+
+    .form-card h2 {
+        margin-bottom: 20px;
+        color: #34495e;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    input {
+        width: 100%;
+        padding: 11px 12px;
+        border: 1px solid #ccc;
+        border-radius: 7px;
+        font-size: 15px;
+        outline: none;
+        transition: 0.2s;
+    }
+
+    input:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+    }
+
+    .btn-salvar {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 7px;
+        background: #3498db;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .btn-salvar:hover {
+        background: #2980b9;
+    }
+
+    .table-card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        overflow-x: auto;
+    }
+
+    .table-card h2 {
+        margin-bottom: 20px;
+        color: #34495e;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: #3498db;
+        color: white;
+    }
+
+    th,
+    td {
+        padding: 14px;
+        text-align: left;
+    }
+
+    th {
+        font-size: 14px;
+    }
+
+    tbody tr {
+        border-bottom: 1px solid #eee;
+        transition: 0.2s;
+    }
+
+    tbody tr:hover {
+        background: #f7fbff;
+    }
+
+    tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    .concluida {
+        color: #27ae60;
+        font-weight: bold;
+    }
+
+    .pendente {
+        color: #e67e22;
+        font-weight: bold;
+    }
+
+    .acoes {
+        display: flex;
+        gap: 8px;
+    }
+
+    .btn-concluir,
+    .btn-deletar {
+        width: auto;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 6px;
+        color: white;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .btn-concluir {
+        background: #27ae60;
+    }
+
+    .btn-concluir:hover {
+        background: #219150;
+    }
+
+    .btn-deletar {
+        background: #e74c3c;
+    }
+
+    .btn-deletar:hover {
+        background: #c0392b;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            padding: 20px 10px;
+        }
+
+        .form-card,
+        .table-card {
+            padding: 18px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            font-size: 13px;
+        }
+
+        .acoes {
+            flex-direction: column;
+        }
+    }
+</style>
+
 </head>
+
 <body>
+
+<div class="container">
+
+<h1>Minha To Do List</h1>
+
+<!-- FORMULÁRIO DE CRIAÇÃO -->
+<div class="form-card">
+
+    <h2>Nova tarefa</h2>
+
     <form method="post" action="/create">
-        <label>Tarefa</label><input type="text" name="tittle"/><br>
-        <label>prazo</label><input type="text" name="deadline"/><br>
-        <button type="submit">Salvar</button>
+
+        <div class="form-group">
+            <label>Tarefa</label>
+            <input type="text" name="title" required>
+        </div>
+
+        <div class="form-group">
+            <label>Prazo</label>
+            <input type="datetime-local" name="deadLine" required>
+        </div>
+
+        <button class="btn-salvar" type="submit">
+            Salvar
+        </button>
+
     </form>
 
-    <br>
+</div>
+
+
+<!-- LISTA DE TAREFAS -->
+<div class="table-card">
+
+    <h2>Minhas tarefas</h2>
+
     <table>
+
         <thead>
             <tr>
-                <th>Titulo</th><th>Criada em</th><th>Prazo</th>
+                <th>Título</th>
+                <th>Criada em</th>
+                <th>Prazo</th>
+                <th>Concluída em</th>
+                <th>Ações</th>
             </tr>
         </thead>
+
         <tbody>
-            <tr th:each = "todo : ${todos}">
-                <td th:text = "${todo.title}"></td>
-                <td th:text = "${todo.createAt}"></td>
-                <td th:text = "${todo.deadline}"></td>
+
+            <tr th:each="todo : ${todos}">
+
+                <td th:text="${todo.title}"></td>
+
+                <td th:text="${todo.createdAt}"></td>
+
+                <td th:text="${todo.deadLine}"></td>
+
+                <td>
+                    <span
+                        th:if="${todo.finishedAt != null}"
+                        class="concluida"
+                        th:text="${todo.finishedAt}">
+                    </span>
+
+                    <span
+                        th:if="${todo.finishedAt == null}"
+                        class="pendente">
+                        Pendente
+                    </span>
+                </td>
+
+                <td>
+
+                    <div class="acoes">
+
+                        <!-- CONCLUIR -->
+                        <form method="post" action="/concluir"
+                              th:if="${todo.finishedAt == null}">
+
+                            <input type="hidden"
+                                   name="id"
+                                   th:value="${todo.id}">
+
+                            <button
+                                type="submit"
+                                class="btn-concluir">
+                                Concluir
+                            </button>
+
+                        </form>
+
+
+                        <!-- DELETAR -->
+                        <form method="post" action="/delete">
+
+                            <input type="hidden"
+                                   name="id"
+                                   th:value="${todo.id}">
+
+                            <button
+                                type="submit"
+                                class="btn-deletar"
+                                onclick="return confirm('Deseja realmente deletar esta tarefa?');">
+                                Deletar
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </td>
+
             </tr>
+
         </tbody>
+
     </table>
+
+</div>
+
+</div>
+
 </body>
 </html>
