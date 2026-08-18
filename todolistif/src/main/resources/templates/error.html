@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ops!</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ops!</title>
 </head>
-<body>
-    <h1>Deu ruim</h1>
-    <p>
-        Erro: <span th:text="${status}"></span>
-    </p>    
-    <img th:src="@{'https://https.dog/'+{}'}" alt="">
+
+<body style="font-family:Arial;text-align:center;padding:40px">
+    <h1>Ops! Algo deu errado.</h1>
+    <p>Erro: <span th:text="${status}"></span></p>
+    <img th:src="@{'https://http.dog/' + ${status} + '.jpg'}" alt="Cachorro do código de erro"
+        style="max-width:500px;width:100%">
+    <p><a href="/">Voltar para a página inicial</a></p>
 </body>
+
 </html>

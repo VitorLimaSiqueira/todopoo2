@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar tarefa</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f8;
+            padding: 40px
+        }
+
+        .card {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 18px;
+            box-sizing: border-box
+        }
+
+        button,
+        a {
+            padding: 10px 16px;
+            border: 0;
+            border-radius: 6px;
+            text-decoration: none
+        }
+
+        button {
+            background: #3498db;
+            color: white
+        }
+
+        a {
+            background: #ddd;
+            color: #333;
+            margin-left: 8px
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h1>Editar tarefa</h1>
+        <form method="post" action="/update"><input type="hidden" name="id" th:value="${todo.id}"><input type="hidden"
+                name="createdAt" th:value="${todo.createdAt}"><label>Tarefa</label><input name="title"
+                th:value="${todo.title}" required><label>Prazo</label><input type="datetime-local" name="deadLine"
+                th:value="${#temporals.format(todo.deadLine, 'yyyy-MM-dd''T''HH:mm')}" required><button
+                type="submit">Salvar alterações</button><a href="/">Cancelar</a></form>
+    </div>
+</body>
+
+</html>

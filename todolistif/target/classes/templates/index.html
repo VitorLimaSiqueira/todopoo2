@@ -295,6 +295,9 @@
                         </form>
 
 
+                        <!-- EDITAR -->
+                        <a th:href="@{/edit/{id}(id=${todo.id})}" style="padding:8px 12px;background:#f39c12;color:white;border-radius:6px;text-decoration:none;font-size:13px;font-weight:bold;">Editar</a>
+
                         <!-- DELETAR -->
                         <form method="post" action="/delete">
 
